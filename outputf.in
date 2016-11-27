@@ -1,0 +1,12 @@
+#include<iostream>
+
+using namespace std ;
+
+int main()
+	{
+int p ;
+	 if( a > b )  {
+c = a + b ; 
+	 else  c = a - b ; }
+	 return 0 ;
+	}

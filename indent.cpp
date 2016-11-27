@@ -29,6 +29,7 @@ int main()
 
                         for( int i = 0 ; i < line.length() ; i++)
                         {
+
                         	c = line[i] ;
                         	if( !isspace(c) && flag2 == 1 ) { 
                         							if( c == ';'){ flag2 = flag = 0 ;}
@@ -51,7 +52,7 @@ ofp << '{' << endl ;
                 }
 
   ifstream if2("outputf.in") ;
-  ofstream ofp2("abc") ;
+  ofstream ofp2("xyz.cpp") ;
                 while( getline( if2 , line))
                 {
                 	 char c ;
@@ -59,7 +60,7 @@ ofp << '{' << endl ;
                         for( int i = 0 ; i < line.length() ; i++)
                         {
                                 c = line[i] ;
-                                if( !isspace(c)){
+                                if( !isspace(c) && c != '#'){
                                 ofp2 << cnt << " " ;
                                 cnt++ ;
                                         break ;
