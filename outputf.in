@@ -1,12 +1,10 @@
-#include<iostream>
 
-using namespace std ;
-
-int main()
-	{
-int p ;
-	 if( a > b )  {
-c = a + b ; 
-	 else  c = a - b ; }
-	 return 0 ;
-	}
+1 #include<iostream> 
+2 using namespace std ; 
+3 int main() 
+4 { 
+5 int p ; 
+6 if( a > b ) { 
+7 c = a + b ; ; 
+8 else c = a - b ; } 
+9 return 0 ; 
