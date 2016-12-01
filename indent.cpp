@@ -51,9 +51,9 @@ ofp << '{' << endl ;
                  //     cnt++ ;
                 }
 
-  ifstream if2("outputf.in") ;
-  ofstream ofp2("xyz.cpp") ;
-                while( getline( if2 , line))
+  fstream if2("outputf.in") ;
+  fstream ofp2("xyz.cpp") ;
+                while( getline( if2 , line) )
                 {
                 	 char c ;
                         int pos = 0 ;
@@ -72,7 +72,8 @@ ofp << '{' << endl ;
 
                 }
 
-
+if2.close() ;
+ofp2.close() ;
 
         return 0 ;
         }
