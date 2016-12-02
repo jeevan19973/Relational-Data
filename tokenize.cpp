@@ -40,28 +40,32 @@ int main()
              for( int i = 0 ; i < pos ; i++)
              {
              	vector<string> v = m[i];
+		 vector<string> sc;
              	for( int j = 0 ; j < v.size(); j++)
              	{
              	       string s=v[j];
-                     for(int i = 0 ; i < s.size() ; i++)
+		       string eg = "" ;
+                     for(int k = 0 ; k < s.size() ; k++)
                      {
-                           vector<string> sc;
+                          
                          
-                         if(!(isalpha(s[i]))) //to check if not alphanumeric
-                               sc[i]=s[i];
+                         if(!(isalpha(s[k]))) //to check if not alphanumeric
+                               {sc.push_back(eg);
+				eg = "" ;
+				}
 
-                         if(isalnum(s[i]) )//to check num or upper,lower char
+                         if(isalnum(s[k]))//to check num or upper,lower char
                                 { 
-                                  sring eg;
-                                  eg[i]=s[i];
+                                 // string eg;
+                                  eg+=s[k];
                                   continue;
                                  }
                                
                      }
+			if( eg.compare("") != 0 ) { sc.push_back(eg) ; eg = "" ; } // added now
                     } 
                     m1[i]=sc;
-                     
-                     
+                      
              	
              }
 
