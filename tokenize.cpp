@@ -39,11 +39,25 @@ int main()
              for( int i = 0 ; i < pos ; i++)
              {
              	vector<string> v = m[i] ;
-             	for( int j = 0 ; j < v.size() ; j++)
+             	for( int j = 0 ; j < v.size(); j++)
              	{
-             		cout << v[j] << " " ;
+             	       string s=v[j];
+                     for(int i = 0 ; i < s.size() ; i++)
+                     {
+                           vector<string> sc;
+                         
+                         if(!(isalpha(s[i]))) //to check if not alphanumeric
+                               sc[i]=s[i];
+
+                         if(isalnum(s[i]) )//to check num or upper,lower char
+                                { 
+                                
+                                  continue;
+                                 }
+                               
+                     }
              	}
-             	cout << endl ;
+             	
              }
 
 
