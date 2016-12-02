@@ -21,19 +21,11 @@ int main()
                     stringstream ssin(dup);
                   while (ssin.good() )
                   {
-<<<<<<< HEAD
                        str = "" ;
                   ssin >> str ;
       
                   v.push_back( str ) ;
                 //  cout << str << endl ;
-=======
-			str = "" ;
-               		ssin >> str ;
-			
-               		v.push_back( str ) ;
-               	//	cout << str << endl ;
->>>>>>> 53a5e4abfc18069f27dc0fff01b783dd554bb5c3
                //    ++i;
                  }
 
@@ -49,38 +41,22 @@ int main()
               
              for( int i = 0 ; i < pos ; i++)
              {
-<<<<<<< HEAD
               vector<string> v = m[i];
                vector<string> sc;
               for( int j = 0 ; j < v.size(); j++)
               {
                      string s=v[j];
                      string eg = "" ;
-=======
-             	vector<string> v = m[i];
-		 vector<string> sc;
-             	for( int j = 0 ; j < v.size(); j++)
-             	{
-             	       string s=v[j];
-		       string eg = "" ;
->>>>>>> 53a5e4abfc18069f27dc0fff01b783dd554bb5c3
                      for(int k = 0 ; k < s.size() ; k++)
                      {
                           
                          
                          if(!(isalnum(s[k]))) //to check if not alphanumeric
                                { if( eg.compare("") != 0 ) sc.push_back(eg);
-<<<<<<< HEAD
                                    eg = s[k] ; 
                                    sc.push_back(eg) ;
                                     eg = "";
         }
-=======
-				eg = s[k] ;	
-				sc.push_back(eg) ;
-				eg = "";
-				}
->>>>>>> 53a5e4abfc18069f27dc0fff01b783dd554bb5c3
 
                          if(isalnum(s[k]))//to check num or upper,lower char
                                 { 
@@ -90,11 +66,7 @@ int main()
                                  }
                                
                      }
-<<<<<<< HEAD
       if( eg.compare("") != 0 ) { sc.push_back(eg) ; eg = "" ; } // added now
-=======
-			if( eg.compare("") != 0 ) { sc.push_back(eg) ; eg = "" ; } // added now
->>>>>>> 53a5e4abfc18069f27dc0fff01b783dd554bb5c3
                     } 
                     m1[i]=sc;
                       
@@ -122,7 +94,6 @@ int main()
                     {
                         used.push_back(v[j+1]);
 
-<<<<<<< HEAD
                     }
               }
            }
@@ -132,21 +103,3 @@ int main()
   return 0 ;
   }
  
-=======
-		//PRINTING FROM MAP m1 - all split tokens ( completely ) 
-		for( int i = 0 ; i < pos ; i++ )
-			{
-				vector<string> v = m1[i] ;
-				for( int j = 0 ;j < v.size() ; j++ )
-					{
-						cout << v[j] << " " ;
-					}
-				cout << endl ;
-			}
-
-
-
-	return 0 ;
-	}
- 
->>>>>>> 53a5e4abfc18069f27dc0fff01b783dd554bb5c3
