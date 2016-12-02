@@ -34,11 +34,12 @@ int main()
                
                }
 
-
-              // PRINTING THE CONTENTS OF MAP to check
+                 map<int,vector<string> > m1 ;
+                   int p=0;      
+              
              for( int i = 0 ; i < pos ; i++)
              {
-             	vector<string> v = m[i] ;
+             	vector<string> v = m[i];
              	for( int j = 0 ; j < v.size(); j++)
              	{
              	       string s=v[j];
@@ -51,12 +52,16 @@ int main()
 
                          if(isalnum(s[i]) )//to check num or upper,lower char
                                 { 
-                                
+                                  sring eg;
+                                  eg[i]=s[i];
                                   continue;
                                  }
                                
                      }
-             	}
+                    } 
+                    m1[i]=sc;
+                     
+                     
              	
              }
 
