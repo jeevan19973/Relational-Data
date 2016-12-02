@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#define kwordssize 7
 
 using namespace std;
 
@@ -71,8 +72,9 @@ int main()
                     m1[i]=sc;
                       
              }
- map<int,vector<string> > m2 ;
-  map<int,vector<string> > m3 
+
+  map<int,vector<string> > m2 ;
+  map<int,vector<string> > m3 ; 
 
     
     for( int i = 0 ; i < pos ; i++ )
@@ -80,26 +82,72 @@ int main()
         vector<string> v = m1[i] ;
         vector<string> assign;
         vector<string> used;
+	int eqpresent = 0 ;
         string kwords[]={"if","else","continue","switch","for","while","do"};
-        for( int j = 0 ;j < v.size() ; j++ )
-          {
-            for(int k=0;k<kwords.size();k++)
-             {
-                  if(v[j]!=kwords[k]&&v[j]!='=')
-                   {
-                      assign.push_back(v[j]);
-                   }
+	for( int j = 0 ; j < v.size() ; j++ )
+		{
+		  if( v[j].compare("=") == 0 ) { eqpresent = 1 ; break ; }
+		}
+	
+	if( eqpresent	== 0 ) { 
+			for( int j = 0 ; j < v.size() ; j++ )
+				{
+				  int flag = 1 ;
+				  for( int k = 0 ; k < kwordssize; k++ )
+					{
+					 if( v[j].compare(kwords[k]) == 0 ) { flag = 0 ; break ; }
+					}
+				  if( flag ) used.push_back( v[j] ) ;
+					
+				}
+				}
+	else {
+		int flip = 0 ;
+		for( int j = 0 ; j < v.size() ; j++ )
+			{
+			  if( v[j].compare("=") == 0 ) { flip = 1 ; continue ; }
+			
+				  int flag = 1 ;
+				  for( int k = 0 ; k < kwordssize; k++ )
+					{
+					 if( v[j].compare(kwords[k]) == 0 ) { flag = 0 ; break ; }
+					}
 
-                   if(v[j]!=kwords[k]&&v[j]=='=')
-                    {
-                        used.push_back(v[j+1]);
-
-                    }
-              }
-           }
+				  if( flag ) { if( flip ) used.push_back( v[j] ) ;
+						else assign.push_back( v[j] ) ; 
+						}
+			}
+		}
+	
+        
            m2[i]=assign;
-           m[i]=used;
+           m3[i]=used;
       }
+
+
+	cout << "Assigned" << endl ;
+	for( int i = 0 ; i < pos ; i++ )
+		{
+		 vector<string> v = m2[i] ;
+		 for( int j = 0 ; j < v.size() ; j++ )
+			{
+				cout << v[j] << " " ;
+			}
+		 cout << endl ;
+		}		
+
+	cout << endl << "Used" << endl ;
+	for( int i = 0 ; i < pos ; i++ )
+		{
+		 vector<string> v = m3[i] ;
+		 for( int j = 0 ; j < v.size() ; j++ )
+			{
+				cout << v[j] << " " ;
+			}
+		 cout << endl ;
+		}		
+
+
   return 0 ;
   }
  
