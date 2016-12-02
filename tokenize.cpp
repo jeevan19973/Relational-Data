@@ -21,7 +21,9 @@ int main()
                     stringstream ssin(dup);
                   while (ssin.good() )
                   {
+			str = "" ;
                		ssin >> str ;
+			
                		v.push_back( str ) ;
                	//	cout << str << endl ;
                //    ++i;
@@ -49,9 +51,11 @@ int main()
                      {
                           
                          
-                         if(!(isalpha(s[k]))) //to check if not alphanumeric
-                               {sc.push_back(eg);
-				eg = "" ;
+                         if(!(isalnum(s[k]))) //to check if not alphanumeric
+                               { if( eg.compare("") != 0 ) sc.push_back(eg);
+				eg = s[k] ;	
+				sc.push_back(eg) ;
+				eg = "";
 				}
 
                          if(isalnum(s[k]))//to check num or upper,lower char
@@ -66,8 +70,20 @@ int main()
                     } 
                     m1[i]=sc;
                       
-             	
              }
+
+
+		//PRINTING FROM MAP m1 - all split tokens ( completely ) 
+		for( int i = 0 ; i < pos ; i++ )
+			{
+				vector<string> v = m1[i] ;
+				for( int j = 0 ;j < v.size() ; j++ )
+					{
+						cout << v[j] << " " ;
+					}
+				cout << endl ;
+			}
+
 
 
 	return 0 ;
