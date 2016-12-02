@@ -6,24 +6,26 @@ typedef long long ll;
 
 
 int main()
-	{
-		fstream fp("xyz.cpp") ;
-		string line ;
-		map<int,vector<string> > m ;
-		int pos = 0 ;
-		 while( getline( fp , line) )
-		 		{
-		 		
-		 		vector<string> v ;
+  {
+    fstream fp("xyz.cpp") ;
+    string line ;
+    map<int,vector<string> > m ;
+    int pos = 0 ;
+     while( getline( fp , line) )
+        {
+        
+        vector<string> v ;
                 //   int i = 0;
-		 			string str ;
-		 			string dup = line ;
+          string str ;
+          string dup = line ;
                     stringstream ssin(dup);
                   while (ssin.good() )
                   {
-               		ssin >> str ;
-               		v.push_back( str ) ;
-               	//	cout << str << endl ;
+                       str = "" ;
+                  ssin >> str ;
+      
+                  v.push_back( str ) ;
+                //  cout << str << endl ;
                //    ++i;
                  }
 
@@ -39,33 +41,65 @@ int main()
               
              for( int i = 0 ; i < pos ; i++)
              {
-             	vector<string> v = m[i];
-             	for( int j = 0 ; j < v.size(); j++)
-             	{
-             	       string s=v[j];
-                     for(int i = 0 ; i < s.size() ; i++)
+              vector<string> v = m[i];
+               vector<string> sc;
+              for( int j = 0 ; j < v.size(); j++)
+              {
+                     string s=v[j];
+                     string eg = "" ;
+                     for(int k = 0 ; k < s.size() ; k++)
                      {
-                           vector<string> sc;
+                          
                          
-                         if(!(isalpha(s[i]))) //to check if not alphanumeric
-                               sc[i]=s[i];
+                         if(!(isalnum(s[k]))) //to check if not alphanumeric
+                               { if( eg.compare("") != 0 ) sc.push_back(eg);
+                                   eg = s[k] ; 
+                                   sc.push_back(eg) ;
+                                    eg = "";
+        }
 
-                         if(isalnum(s[i]) )//to check num or upper,lower char
+                         if(isalnum(s[k]))//to check num or upper,lower char
                                 { 
-                                  sring eg;
-                                  eg[i]=s[i];
+                                 // string eg;
+                                  eg+=s[k];
                                   continue;
                                  }
                                
                      }
+      if( eg.compare("") != 0 ) { sc.push_back(eg) ; eg = "" ; } // added now
                     } 
                     m1[i]=sc;
-                     
-                     
-             	
+                      
              }
+ map<int,vector<string> > m2 ;
+  map<int,vector<string> > m3 
 
+    
+    for( int i = 0 ; i < pos ; i++ )
+      {
+        vector<string> v = m1[i] ;
+        vector<string> assign;
+        vector<string> used;
+        string kwords[]={"if","else","continue","switch","for","while","do"};
+        for( int j = 0 ;j < v.size() ; j++ )
+          {
+            for(int k=0;k<kwords.size();k++)
+             {
+                  if(v[j]!=kwords[k]&&v[j]!='=')
+                   {
+                      assign.push_back(v[j]);
+                   }
 
-	return 0 ;
-	}
+                   if(v[j]!=kwords[k]&&v[j]=='=')
+                    {
+                        used.push_back(v[j+1]);
+
+                    }
+              }
+           }
+           m2[i]=assign;
+           m[i]=used;
+      }
+  return 0 ;
+  }
  
