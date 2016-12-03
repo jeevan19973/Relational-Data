@@ -1,9 +1,39 @@
 #include <bits/stdc++.h>
-#define kwordssize 7
-
+#define kwordssize 8
+#define decwordssize 6
 using namespace std;
 
 typedef long long ll;
+
+void usedpush( string s , vector<string> &used) 
+		{
+			
+			int notnum = 0 ;
+			for( int i = 0 ; i < s.length() ; i++ )
+				{
+				 if( (s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z') )
+					{ notnum = 1 ;
+					  break ;
+					}
+				}
+			if( notnum ) used.push_back( s ) ;
+
+		}
+
+void assignpush( string s , vector<string> &assign)
+		{
+			
+			int notnum = 0 ;
+			for( int i = 0 ; i < s.length() ; i++ )
+				{
+				 if( (s[i] >= 'a' && s[i] <= 'z') || (s[i] >= 'A' && s[i] <= 'Z') )
+					{ notnum = 1 ;
+					  break ;
+					}
+				}
+			if( notnum ) assign.push_back( s ) ;
+
+		}
 
 
 int main()
@@ -46,6 +76,7 @@ int main()
                vector<string> sc;
               for( int j = 0 ; j < v.size(); j++)
               {
+		     
                      string s=v[j];
                      string eg = "" ;
                      for(int k = 0 ; k < s.size() ; k++)
@@ -82,14 +113,27 @@ int main()
         vector<string> v = m1[i] ;
         vector<string> assign;
         vector<string> used;
+	
+	if( v.size() > 1 && v[1].compare("#") == 0 ) { m2[i] = assign ; m3[i] = used ; continue ; } //To skip the line of '#'s
+
 	int eqpresent = 0 ;
-        string kwords[]={"if","else","continue","switch","for","while","do"};
+        string kwords[]={"if","else","continue","switch","for","while","do","return"};
+	string decwords[] = {"int" , "long" , "float" , "double" , "struct" , "vector"} ;
 	for( int j = 0 ; j < v.size() ; j++ )
 		{
-		  if( v[j].compare("=") == 0 ) { eqpresent = 1 ; break ; }
+		  if( v[j].compare("=") == 0 ) { eqpresent = 1 ; 
+						 break ; }
 		}
 	
-	if( eqpresent	== 0 ) { 
+	if( eqpresent == 0 ) { 
+
+				//added 5 lines here, to check if there are no '='s and there are declarations
+				int noused = 0 ;
+		for( int k = 0 ; k < decwordssize ; k++ )
+			{
+			  if( v.size() > 1 && v[1].compare(decwords[k]) == 0 ) { noused = 1 ; break ; }
+			} 
+		if( noused) continue ;
 			for( int j = 0 ; j < v.size() ; j++ )
 				{
 				  int flag = 1 ;
@@ -97,12 +141,14 @@ int main()
 					{
 					 if( v[j].compare(kwords[k]) == 0 ) { flag = 0 ; break ; }
 					}
-				  if( flag ) used.push_back( v[j] ) ;
+				  if( flag )  { usedpush( v[j] , used ) ;
+						}
 					
 				}
 				}
 	else {
 		int flip = 0 ;
+		
 		for( int j = 0 ; j < v.size() ; j++ )
 			{
 			  if( v[j].compare("=") == 0 ) { flip = 1 ; continue ; }
@@ -112,9 +158,13 @@ int main()
 					{
 					 if( v[j].compare(kwords[k]) == 0 ) { flag = 0 ; break ; }
 					}
+				for( int k = 0 ; k < decwordssize ; k++ )
+					{
+			  		if( v[j].compare(decwords[k]) == 0 ) { flag = 0 ; break ; }
+					}		 
 
-				  if( flag ) { if( flip ) used.push_back( v[j] ) ;
-						else assign.push_back( v[j] ) ; 
+				  if( flag ) { if( flip )  {usedpush( v[j] , used ) ;}
+						else  { assignpush( v[j] , assign) ; }
 						}
 			}
 		}
@@ -129,6 +179,7 @@ int main()
 	for( int i = 0 ; i < pos ; i++ )
 		{
 		 vector<string> v = m2[i] ;
+		 cout << i << " " ;
 		 for( int j = 0 ; j < v.size() ; j++ )
 			{
 				cout << v[j] << " " ;
@@ -139,6 +190,7 @@ int main()
 	cout << endl << "Used" << endl ;
 	for( int i = 0 ; i < pos ; i++ )
 		{
+		 cout << i << " " ;
 		 vector<string> v = m3[i] ;
 		 for( int j = 0 ; j < v.size() ; j++ )
 			{
