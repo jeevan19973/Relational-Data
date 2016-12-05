@@ -175,7 +175,7 @@ int main()
       }
 
 
-	cout << "Assigned" << endl ;
+/*	cout << "Assigned" << endl ;
 	for( int i = 0 ; i < pos ; i++ )
 		{
 		 vector<string> v = m2[i] ;
@@ -195,6 +195,20 @@ int main()
 		 for( int j = 0 ; j < v.size() ; j++ )
 			{
 				cout << v[j] << " " ;
+			}
+		 cout << endl ;
+		}
+
+*/
+
+	cout << endl << "Dependent Equal" << endl ;
+	for( int i = 0 ; i < pos ; i++ )
+		{
+		 if( m2[i].size() == 0 ) continue ; 
+		 cout << m2[i][0] << " depends on : " ;
+		 for( int j = 0 ; j < m3[i].size() ; j++ )
+			{
+				cout << m3[i][j] << " " ;
 			}
 		 cout << endl ;
 		}		
