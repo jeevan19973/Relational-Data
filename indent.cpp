@@ -37,11 +37,16 @@ int main()
                         	
                         	 
                         	if( !isspace(c) && c == '{' && flag == 1) { flag = 0 ; flag2 = 0 ; ofp << '{' << endl  ;  continue ;}
+				if( !isspace(c) && c == '{' ) { ofp << '{' << endl ; continue ; }
 				if( !isspace(c) && flag2 == 1 ) { 
+								  if( c == ';' ) { flag = flag2 = 0 ; }
+								else { 
                         					  flag = 0 ;
                         					  flag2 = 2 ;
 								  ofp << '{' << endl ;
-//ofp << cnt << " " ; cnt++ ; 
+									}
+//ofp << cnt << " " ; cnt++ ; 					
+							
 								
                         					}
                         	ofp << c ;

@@ -89,6 +89,8 @@ int main()
                                    eg = s[k] ; 
                                    sc.push_back(eg) ;
                                     eg = "";
+
+		//Added start Dec 7
 				 if( s[k] == '{' ) { openbracket.push_back( i ) ; }
 				 if( s[k] == '}' ) { 
 							pair<int,int> pa ;
@@ -98,7 +100,8 @@ int main()
 							int end = openbracket.size() - 1 ;
 							openbracket.erase(openbracket.begin() + end ) ;
 						}
-        }
+		//Added end Dec 7        
+}
 
                          if(isalnum(s[k]))//to check num or upper,lower char
                                 { 
@@ -123,15 +126,40 @@ int main()
         vector<string> v = m1[i] ;
         vector<string> assign;
         vector<string> used;
-	
-	if( v.size() > 1 && v[1].compare("#") == 0 ) { m2[i] = assign ; m3[i] = used ; continue ; } //To skip the line of '#'s
+	 string kwords[]={"if","else","continue","switch","for","while","do","return"};
+	string decwords[] = {"int" , "long" , "float" , "double" , "struct" , "vector" , "char"} ;	
 
-	int eqpresent = 0 ;
-        string kwords[]={"if","else","continue","switch","for","while","do","return"};
-	string decwords[] = {"int" , "long" , "float" , "double" , "struct" , "vector" , "char"} ;
+	if( v.size() > 1 && v[1].compare("#") == 0 ) { m2[i] = assign ; m3[i] = used ; continue ; } //To skip the line of '#'s
+	
+									//To skip the line of "for" ---- start
+	if( v.size() > 1 && v[1].compare("for") == 0 ) 
+							{
+							int semicolcnt = 0 ;
+								for( int j = 2 ; j < v.size() ; j++ )
+									{
+										if( v[j].compare(")") == 0 ) semicolcnt = 1 ; 
+										if( v[j].compare(";") == 0 ) semicolcnt++ ;
+										if( semicolcnt == 2 ) { 
+												  int flag = 1 ;
+				  for( int k = 0 ; k < kwordssize; k++ )
+					{
+					 if( v[j].compare(kwords[k]) == 0 ) { flag = 0 ; break ; }
+					}
+				  if( flag )  { usedpush( v[j] , used ) ;
+						}
+					
+													}
+
+									}
+							 m2[i] = assign ; m3[i] = used ; continue ;
+
+								}
+									//To skip the line of "for" ---- end
+	int eqpresent = 0 ;		
+       
 	for( int j = 0 ; j < v.size() ; j++ )
 		{
-		  if( v[j].compare("=") == 0 ) { eqpresent = 1 ; 
+		  if( v[j].compare("=") == 0 && !(v[j-1].compare("!") == 0 || v[j-1].compare("=") == 0 || v[j+1].compare("=") == 0 || v[j-1].compare(">") == 0 || v[j-1].compare("<") == 0 ) ) { eqpresent = 1 ; 
 						 break ; }
 		}
 	
@@ -216,10 +244,35 @@ int main()
 		{
 		 if( m2[i].size() == 0 ) continue ; 
 		 cout << m2[i][0] << " depends on : " ;
-		 for( int j = 0 ; j < m3[i].size() ; j++ )
+		 vector<string> v = m3[i] ;
+		
+		 int blocknum = 0 ;
+		 for( int j = 0 ; j < bracketpairs.size() ; j++ )
 			{
-				cout << m3[i][j] << " " ;
+			 if( i >= bracketpairs[j].first && i <= bracketpairs[j].second ) { blocknum = j ; break ; }
 			}
+		 if( blocknum != bracketpairs.size() - 1 )
+					{
+					  int j = bracketpairs[blocknum].first ;
+					  while( 1 ) 
+						{
+						  if( m2[j].size() == 0 && m3[j].size() > 0 ) break ;
+						  j-- ;
+						}
+					  for( int k = 0 ; k < m3[j].size() ; k++ ) 
+						{
+							v.push_back( m3[j][k] ) ;
+						}
+					 set<string> s ;
+					s.insert( v.begin() , v.end()) ;
+					v.assign( s.begin() , s.end()) ;
+					}
+		
+		 for( int j = 0 ; j < v.size() ; j++ )
+			{
+				cout << v[j] << " " ;
+			}
+
 		 cout << endl ;
 		}		
 
@@ -228,6 +281,8 @@ int main()
 		{
 		 cout << bracketpairs[i].first << " " << bracketpairs[i].second << endl ;
 		}
+
+	
 
 
   return 0 ;

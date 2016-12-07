@@ -4,8 +4,15 @@
 int main()
 	{
 int p ;
-	 if( a > b )  {
-c = a + b ;} 
-	 else { c = a - b ; }
+	 if( a >= b ) {
+ c = c + b ;} 
+	 else {
+ c = c - 1 ; }
+	for( int i = 0 ; i < 4 ; i++ )
+		{
+
+		  r = r - 3 ; 
+		}	
+	
 	 return 0 ;
 	}
