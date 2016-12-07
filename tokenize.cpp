@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #define kwordssize 8
-#define decwordssize 6
+#define decwordssize 7
 using namespace std;
 
 typedef long long ll;
@@ -56,10 +56,10 @@ int main()
                   ssin >> str ;
       
                   v.push_back( str ) ;
-                //  cout << str << endl ;
+               //   cout << str << " " ;
                //    ++i;
                  }
-
+		 // cout << endl ;
                  string num = v[0] ; //to check if this line has been numbered in "xyz.cpp" or not
                  if(!(num[0] >= '0' && num[0] <= '9') ) continue ;
                  pos++ ;
@@ -68,16 +68,17 @@ int main()
                }
 
                  map<int,vector<string> > m1 ;
+		 vector<int> openbracket ;  //added 7th Dec
+		 vector<pair<int,int> > bracketpairs ; //added 7th Dec
                    int p=0;      
               
-             for( int i = 0 ; i < pos ; i++)
+             for( int i = 0 ; i <= pos ; i++)
              {
               vector<string> v = m[i];
                vector<string> sc;
               for( int j = 0 ; j < v.size(); j++)
               {
-		     
-                     string s=v[j];
+		     string s=v[j];
                      string eg = "" ;
                      for(int k = 0 ; k < s.size() ; k++)
                      {
@@ -88,6 +89,15 @@ int main()
                                    eg = s[k] ; 
                                    sc.push_back(eg) ;
                                     eg = "";
+				 if( s[k] == '{' ) { openbracket.push_back( i ) ; }
+				 if( s[k] == '}' ) { 
+							pair<int,int> pa ;
+						        pa.first = openbracket[openbracket.size()-1] ;
+							pa.second = i ;
+							bracketpairs.push_back( pa ) ;
+							int end = openbracket.size() - 1 ;
+							openbracket.erase(openbracket.begin() + end ) ;
+						}
         }
 
                          if(isalnum(s[k]))//to check num or upper,lower char
@@ -118,7 +128,7 @@ int main()
 
 	int eqpresent = 0 ;
         string kwords[]={"if","else","continue","switch","for","while","do","return"};
-	string decwords[] = {"int" , "long" , "float" , "double" , "struct" , "vector"} ;
+	string decwords[] = {"int" , "long" , "float" , "double" , "struct" , "vector" , "char"} ;
 	for( int j = 0 ; j < v.size() ; j++ )
 		{
 		  if( v[j].compare("=") == 0 ) { eqpresent = 1 ; 
@@ -212,6 +222,12 @@ int main()
 			}
 		 cout << endl ;
 		}		
+
+	cout << endl << "Blocks" << endl ;
+	for( int i = 0 ; i < bracketpairs.size() ; i++ )
+		{
+		 cout << bracketpairs[i].first << " " << bracketpairs[i].second << endl ;
+		}
 
 
   return 0 ;
