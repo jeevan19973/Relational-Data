@@ -246,27 +246,6 @@ int main()
 		 cout << m2[i][0] << " depends on : " ;
 		 vector<string> v = m3[i] ;
 		
-		 int blocknum = 0 ;
-		 for( int j = 0 ; j < bracketpairs.size() ; j++ )
-			{
-			 if( i >= bracketpairs[j].first && i <= bracketpairs[j].second ) { blocknum = j ; break ; }
-			}
-		 if( blocknum != bracketpairs.size() - 1 )
-					{
-					  int j = bracketpairs[blocknum].first ;
-					  while( 1 ) 
-						{
-						  if( m2[j].size() == 0 && m3[j].size() > 0 ) break ;
-						  j-- ;
-						}
-					  for( int k = 0 ; k < m3[j].size() ; k++ ) 
-						{
-							v.push_back( m3[j][k] ) ;
-						}
-					 set<string> s ;
-					s.insert( v.begin() , v.end()) ;
-					v.assign( s.begin() , s.end()) ;
-					}
 		
 		 for( int j = 0 ; j < v.size() ; j++ )
 			{
