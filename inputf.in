@@ -1,14 +1,21 @@
 #include<iostream>
 
-
 int main()
-	{int p ;
-	 if( a >= b ) { c = c + b ;} 
-	 else { c = c - 1 ; }
-	for( int i = 0 ; i < 4 ; i++ )
-		{
-		  r = r - 3 ; 
-		}	
-	
-	 return 0 ;
+	{
+	 int x , y , z , pow ;
+	 x = 0 ;
+	 y = 0 ;
+	 z = 0 ;
+	 pow = 0 ;
+	 if( y < 0 ) { pow = 0 - y ; }
+	 else { pow = y ; }
+	 z = 1 ;
+	 while( pow != 0 ){
+		 z = z * x ;
+		 pow = pow - 1 ; 
+		}
+	 if( y < 0 ){
+		 z = 4 + z ; 
+		}
+	  return 0 ;
 	}

@@ -1,18 +1,31 @@
 1 #include<iostream>
 
-
 2 int main()
 3 	{
-4 int p ;
-5 	 if( a >= b ) {
-6  c = c + b ;} 
-7 	 else {
-8  c = c - 1 ; }
-9 	for( int i = 0 ; i < 4 ; i++ )
-10 		{
 
-11 		  r = r - 3 ; 
-12 		}	
-	
-13 	 return 0 ;
-14 	}
+4 	 int x , y , z , pow ;
+5 	 x = 0 ;
+6 	 y = 0 ;
+7 	 z = 0 ;
+8 	 pow = 0 ;
+9 	 if( y < 0 ) {
+10  pow = 0 - y ; }
+
+11 	 else {
+12  pow = y ; }
+
+13 	 z = 1 ;
+14 	 while( pow != 0 ){
+
+15 		 z = z * x ;
+16 		 pow = pow - 1 ; 
+17 		}
+
+18 	 if( y < 0 ){
+
+19 		 z = 4 + z ; 
+20 		}
+
+21 	  return 0 ;
+22 	}
+

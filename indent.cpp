@@ -50,8 +50,8 @@ int main()
 								
                         					}
                         	ofp << c ;
-				
-				if( !isspace(c) && flag2 == 2 && c == ';') { ofp << '}' ; flag2 = 0 ; flag = 0 ;  }
+				if( c == '}') ofp << endl ;
+				if( !isspace(c) && flag2 == 2 && c == ';') { ofp << '}' << endl ; flag2 = 0 ; flag = 0 ;  }
                         	if( c == ')') { 
                         					flag2 = 1 ;
                         					flag = 1 ;

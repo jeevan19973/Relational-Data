@@ -1,9 +1,29 @@
+//ASSUMPTION 1 ::::  Each line in the sample input contains only 1 statement
+
+
 #include <bits/stdc++.h>
 #define kwordssize 8
 #define decwordssize 7
 using namespace std;
 
 typedef long long ll;
+
+set<int> statedepend( vector<int> parents[] , string s , map<int,vector<string> > m2 , int cur)
+			{
+			  set<int> ans ;
+			  for( int i = 0 ; i < m2[cur].size() ; i++ )
+				{
+				  if( m2[cur][i].compare(s) == 0 ) { ans.insert( cur ) ; return ans ; }
+				}
+			  
+			 for( int i = 0 ; i < parents[cur].size() ; i++ )
+				{
+				 set<int> dup = statedepend( parents , s , m2 , parents[cur][i] ) ;
+				 ans.insert( dup.begin() , dup.end()) ;
+				}
+			 return ans ;
+			}
+
 
 void usedpush( string s , vector<string> &used) 
 		{
@@ -212,8 +232,108 @@ int main()
            m3[i]=used;
       }
 
+		//To find the path between nodes 
+		//For proper understanding please check "Testing_WhiteBox" page number 27
+		//START - Date 21/12/2016
+		set<int> children[pos] ;
+		int Start = bracketpairs[bracketpairs.size()-1].first ;
+		string conditional[] = {"if" , "else" , "for" , "while"} ;
+		for( int i = Start ; i <= bracketpairs[bracketpairs.size()-1].second ; i++ )
+			{
+			  		
+					 int continflag = 0 ;
+					 for( int k = 0 ; k < bracketpairs.size() ; k++ )
+									{
+										if( bracketpairs[k].second == i )
+										 			{
+													  continflag = 1 ; break ;
+													}
+									}
+					if( continflag == 1 ) continue ;
+					if( m1[i][1].compare("if") == 0 ) 
+								{ 
+								  children[i].insert(i+1) ;
+								  int curblock = -1 ;
+								  for( int k = 0 ; k < bracketpairs.size() ; k++ )
+									{
+										if( bracketpairs[k].first == i )
+										 			{
+													  curblock = k ; break ;
+													}
+									}
+								  int nextblock = curblock ;
+								  int laterelse = 0 ;
+								  while( 1 ) 
+									{
+									  nextblock++ ;
+				
+									 if( m1[bracketpairs[nextblock].first][1].compare("else") == 0 && bracketpairs[nextblock].first > i ) { children[i].insert(bracketpairs[nextblock].first) ; laterelse++ ; }
+									 else break ;		   
+									}
+								  
+							          if( laterelse == 0 ) { children[i].insert(bracketpairs[curblock].second+1) ;
+											 children[bracketpairs[curblock].second].insert(bracketpairs[curblock].second+1) ; }
+								  else { 
+										int commonchild = bracketpairs[nextblock-1].second + 1;
+										int Dupnextblock = curblock ;
+										while(Dupnextblock != nextblock )
+											{
+											  children[bracketpairs[Dupnextblock].second].insert(commonchild) ;
+											  Dupnextblock++ ;
+											}
+								}
 
-/*	cout << "Assigned" << endl ;
+								}
+					else if( m1[i][1].compare("while") == 0  || m1[i][1].compare("for") == 0)
+								{
+								  children[i].insert(i+1) ;
+								  int curblock = -1 ;
+								  for( int k = 0 ; k < bracketpairs.size() ; k++ )
+									{
+										if( bracketpairs[k].first == i )
+										 			{
+										
+													  curblock = k ; break ;
+													}
+									}
+								   children[i].insert(bracketpairs[curblock].second + 1) ;
+								   children[bracketpairs[curblock].second].insert(bracketpairs[curblock].second+1) ;
+								}
+					else { children[i].insert(i+1) ; }
+
+				}
+
+		//END
+
+		//Date 21/12/2016
+		vector<int> childvector[pos] ;
+		for( int i = 0 ; i < pos ; i++ )
+			{
+				childvector[i].assign(children[i].begin(),children[i].end()) ;
+			}
+
+		vector<int> parents[pos] ;
+		for( int i = 0 ; i < pos ; i++ )
+			{
+			  for( int j = 0 ; j < childvector[i].size() ; j++ )
+				{
+				  int p = childvector[i][j] ;
+				  if( p < pos ) parents[p].push_back( i ) ;
+				}
+			}
+		
+		/*for( int i = 0 ; i < pos ; i++ )
+			{
+			 cout << i << " -->" ;
+			 for( int j = 0 ; j < parents[i].size() ; j++ )
+				{
+				 cout << parents[i][j] << " " ;
+				}
+			cout << endl ;
+			}
+*/
+//Date 21/12/2016
+	cout << "Assigned" << endl ;
 	for( int i = 0 ; i < pos ; i++ )
 		{
 		 vector<string> v = m2[i] ;
@@ -237,13 +357,14 @@ int main()
 		 cout << endl ;
 		}
 
-*/
 
-	cout << endl << "Dependent Equal" << endl ;
+
+	cout << endl << "Variable Dependency" << endl ;
 	for( int i = 0 ; i < pos ; i++ )
 		{
-		 if( m2[i].size() == 0 ) continue ; 
-		 cout << m2[i][0] << " depends on : " ;
+		 if( m2[i].size() == 0 ) continue ;
+		 if( m3[i].size() == 0 ) continue ; 
+		 cout << "(" << m2[i][0] << ", " << i <<") depends on : " ;
 		 vector<string> v = m3[i] ;
 		
 		
@@ -253,7 +374,39 @@ int main()
 			}
 
 		 cout << endl ;
+		}
+
+
+// Start Date 21/12/2016
+	 cout << endl << "Statement Dependency" << endl ;
+	for( int i = 0 ; i < pos ; i++ )
+		{
+		 if( m2[i].size() == 0 ) continue ;
+		 if( m3[i].size() == 0 ) continue ;
+		 cout << i << " depends on : " ;
+		 vector<string> v = m3[i] ;
+		 set<int> sdepend ;
+		for( int k = 0 ; k < v.size() ; k++ )
+			{		 
+			  int fl = 0 ; 
+			  for( int j = 0 ; j < parents[i].size() ; j++ )
+				{
+				 set<int> dup = statedepend( parents , v[k] , m2 , parents[i][j] ) ;
+				 sdepend.insert( dup.begin() , dup.end() ) ;
+				}
+			}
+		 vector<int> vdepend ;
+		 vdepend.assign( sdepend.begin() , sdepend.end() ) ;
+		 for( int j = 0 ; j < vdepend.size() ; j++ )
+			{
+			 cout << vdepend[j] << " " ;
+			}
+		 cout << endl ;
 		}		
+
+//  End Date 21/12/2016
+
+
 
 	cout << endl << "Blocks" << endl ;
 	for( int i = 0 ; i < bracketpairs.size() ; i++ )
